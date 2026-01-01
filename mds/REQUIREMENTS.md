@@ -1,22 +1,36 @@
 # Requirements.md - アジャイルTDDプロジェクト厳守ルール
 
-## 1. 開発原則
+## 1. 開発原則(これは絶対に厳守)
 - アジャイルTDDを厳守。Red-Green-Refactorサイクル必須。
 - 逸脱時は即拒否。再生成を要求。
-- REQUIREMENTS.md及び./mds/に含まれるmdを参照する
+- TDD(/tests/)で実装されたものを中心にプロジェクトを進めること
+- /mds/backlog.md より、todoを書き示し更新し続け、透明性を保つこと
+- /mds/config_conventions.md より、コード規約を定めて従うこと
 
 ## 2. TDD実装
-- 全てテストをGitHub Actions (.github/workflows/test.yml)で実行。
-- PRマージ前にテスト通過必須 (Branch Protection有効)。
+- /tests/ に実装する。
 
-## 3. 人間定義項目
-- 要件: [人間記述]
-- 禁止技術: [例: 同期処理禁止、特定ライブラリNG]
+## 3. 人間定義項目（圧縮版）
+- **目的**: オフライン環境で、Webcam映像をWebSocket経由で高速配信・受信・表示。  
+- **範囲**: 同一ネットワーク内での映像取得・配信・確認。  
+- **完結基準**: Webcam → WS配信 → 受信・表示。
+- **業務要件**:  
+  - 現状、Web経由で簡単・高速に映像を配信できる仕組みがない。  
+  - フロー: 端末アクセス → 配信 → 他端末で受信。
+- **機能要件**:  
+  - Rust中心実装（将来ライブラリ化可能）。  
+  - 遅延最小・最大fpsを追求。  
+  - 配信端末でプレビュー表示。  
+  - WebSocketで映像配信。  
+  - 画質調整機能。  
+  - /static/ にHTML+VanillaJSで受信表示ページを用意。
+- **非機能要件**: 未定義（速度最優先想定）。
+- **外部インタフェース**:  
+  - Chrome対応（Win/macOS/iOS/Android）。  
+  - オフライン動作必須。
+- **制約・前提**: Rust中心開発。
+- **禁止技術**: Docker、npm、オンライン依存。
 
-## 4. ドキュメント管理
-- /mds/ に全MD保存 (coding_conventions.md, backlog.md)。
-- 更新時は差分明記し、厳守。
-
-## 5. 参照ファイル
+## 4. 参照ファイル
 - coding_conventions.md: [./mds/coding_conventions.md]
 - backlog.md: [./mds/backlog.md]
